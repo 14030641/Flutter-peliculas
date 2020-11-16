@@ -13,6 +13,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   ApiLogin httpLogin = ApiLogin();
+  bool isValidating = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,9 @@ class _LoginState extends State<Login> {
         ),
         color: Colors.lightBlue,
         onPressed: () async {
+          setState(() {
+            isValidating = true;
+          });
           UserDAO objUser =
               UserDAO(username: txtUser.text, pwduser: txtPass.text);
           final token = await httpLogin.validateUser(objUser);
@@ -100,7 +104,9 @@ class _LoginState extends State<Login> {
           ),
         ),
         Positioned(child: logo, top: 235),
-        Positioned(top: 350, child: CircularProgressIndicator())
+        Positioned(
+            top: 350,
+            child: isValidating ? CircularProgressIndicator() : Container())
       ],
     );
   }

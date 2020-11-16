@@ -1,11 +1,27 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:practica2/src/assets/configuration.dart';
+import 'package:image_picker/image_picker.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
 
   @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final picker = ImagePicker();
+  String imagePath = "";
+
+  @override
   Widget build(BuildContext context) {
+    final imgFinal = imagePath == ""
+        ? Image.network(
+            "https://villasmilindovillas.com/wp-content/uploads/2020/01/Profile.png",
+          )
+        : ClipOval(child: Image.file(File(imagePath), fit: BoxFit.fill));
     return Container(
         child: Scaffold(
             appBar: AppBar(
@@ -16,15 +32,43 @@ class Profile extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(30),
                 child: ListView(children: <Widget>[
-                  InkWell(
-                    child: Image.network(
-                      "https://villasmilindovillas.com/wp-content/uploads/2020/01/Profile.png",
-                      width: 180,
-                      height: 180,
+                  Container(
+                    width: 180,
+                    height: 180,
+                    child: InkWell(
+                      child: imgFinal,
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Origin'),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text('Gallery source'),
+                                    onPressed: () async {
+                                      final pickedFile = await picker.getImage(
+                                          source: ImageSource.gallery);
+                                      imagePath = pickedFile.path;
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Text('Camera source'),
+                                    onPressed: () async {
+                                      final pickedFile = await picker.getImage(
+                                          source: ImageSource.camera);
+                                      imagePath = pickedFile.path;
+                                      Navigator.pop(context);
+                                      setState(() {});
+                                    },
+                                  )
+                                ],
+                              );
+                            });
+                      },
                     ),
-                    onTap: () {
-                      debugPrint("Clic en imagen");
-                    },
                   ),
                   Text("Nombre"),
                   SizedBox(height: 10),
@@ -56,7 +100,7 @@ class Profile extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
                       color: Configuration.colorApp,
-                      onPressed: () {
+                      onPressed: () async {
                         debugPrint("Actualizar");
                       }),
                 ]),

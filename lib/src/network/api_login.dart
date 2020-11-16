@@ -8,10 +8,10 @@ class ApiLogin {
   Future<String> validateUser(UserDAO objUser) async {
     final response = await http.post(
       '$ENDPOINT',
-      /*headers: <String, String>{
+      headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      },*/
-      body: objUser.toJSON(),
+      },
+      body: objUser.userToJSON(),
     );
     if (response.statusCode == 200) {
       return response.body;
