@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:practica2/src/models/user_dao.dart';
+import 'package:practica2/src/network/api_login.dart';
 import 'package:practica2/src/screen/dashboard.dart';
 
 class Login extends StatefulWidget {
@@ -10,14 +12,18 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  ApiLogin httpLogin = ApiLogin();
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController txtUser = TextEditingController();
+    TextEditingController txtPass = TextEditingController();
     final logo = Image.network(
         'http://itcelaya.edu.mx/jornadabioquimica/wp-content/uploads/2019/07/cropped-LOGO-ITC.png',
         width: 180,
         height: 120);
-
     final txtEmail = TextFormField(
+        controller: txtUser,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           hintText: 'Introduce el email',
@@ -25,6 +31,7 @@ class _LoginState extends State<Login> {
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         ));
     final txtPwd = TextFormField(
+      controller: txtPass,
       keyboardType: TextInputType.text,
       obscureText: true,
       decoration: InputDecoration(
@@ -40,9 +47,29 @@ class _LoginState extends State<Login> {
           style: TextStyle(color: Colors.white),
         ),
         color: Colors.lightBlue,
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Dashboard()));
+        onPressed: () async {
+          UserDAO objUser =
+              UserDAO(username: txtUser.text, pwduser: txtPass.text);
+          final token = await httpLogin.validateUser(objUser);
+          if (token != null)
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Dashboard()));
+          else {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Error Sign In'),
+                    content: Text('The credentials are incorrect'),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('Close'),
+                        onPressed: () => Navigator.of(context).pop(),
+                      )
+                    ],
+                  );
+                });
+          }
         });
 
     return Stack(
