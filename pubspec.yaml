@@ -31,6 +31,7 @@ dependencies:
   http: ^0.12.2
   image_picker: ^0.6.7+14
   sqflite:  ^1.2.0
+  path_provider: ^1.6.0
 
 dev_dependencies:
   flutter_test:
