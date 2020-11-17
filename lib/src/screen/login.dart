@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:practica2/src/models/user_dao.dart';
 import 'package:practica2/src/network/api_login.dart';
 import 'package:practica2/src/screen/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -14,6 +15,17 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   ApiLogin httpLogin = ApiLogin();
   bool isValidating = false;
+  bool isRemember = true;
+
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Future _rememberme(String token, user) async {
+    final SharedPreferences prefs = await _prefs;
+    if (isRemember) {
+      await prefs.setString("token", token);
+      await prefs.setString("username", user);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +53,16 @@ class _LoginState extends State<Login> {
         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       ),
     );
+    final check = CheckboxListTile(
+      title: Text("Mantener sesión iniciada"),
+      value: isRemember,
+      onChanged: (value) {
+        setState(() {
+          isRemember = value;
+        });
+      },
+      controlAffinity: ListTileControlAffinity.leading,
+    );
     final loginButton = RaisedButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Text(
@@ -55,10 +77,14 @@ class _LoginState extends State<Login> {
           UserDAO objUser =
               UserDAO(username: txtUser.text, pwduser: txtPass.text);
           final token = await httpLogin.validateUser(objUser);
-          if (token != null)
+          setState(() {
+            isValidating = false;
+          });
+          if (token != null) {
+            await _rememberme(token, txtUser.text);
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Dashboard()));
-          else {
+          } else {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -97,7 +123,7 @@ class _LoginState extends State<Login> {
                 txtEmail,
                 SizedBox(height: 10),
                 txtPwd,
-                SizedBox(height: 10),
+                check,
                 loginButton,
               ],
             ),

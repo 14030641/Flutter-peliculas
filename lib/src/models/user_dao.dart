@@ -6,8 +6,7 @@ class UserDAO {
 
   int id;
   String nomUser;
-  String apepUser;
-  String apemUser;
+  String lastUser;
   String telUser;
   String emailUser;
   String foto;
@@ -17,8 +16,7 @@ class UserDAO {
       this.username,
       this.pwduser,
       this.nomUser,
-      this.apepUser,
-      this.apemUser,
+      this.lastUser,
       this.telUser,
       this.emailUser,
       this.foto});
@@ -27,17 +25,23 @@ class UserDAO {
     return UserDAO(
       id: map['id'],
       nomUser: map['nomUser'],
-      apepUser: map['apepUser'],
-      apemUser: map['apemUser'],
+      lastUser: map['lastUser'],
       telUser: map['telUser'],
       emailUser: map['emailUser'],
       foto: map['foto'],
-      username: map['username'],
-      pwduser: map['pwduser'],
     );
   }
   Map<String, dynamic> toJSON() {
-    return {"username": username, "pwduser": pwduser};
+    return {
+      "id": id,
+      "nomUser": nomUser,
+      "lastUser": lastUser,
+      "telUser": telUser,
+      "emailUser": emailUser,
+      "foto": foto,
+      "username": username,
+      "pwduser": pwduser
+    };
   }
 
   String userToJSON() {

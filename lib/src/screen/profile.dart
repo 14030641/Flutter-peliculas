@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:practica2/src/assets/configuration.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:practica2/src/database/database_helper.dart';
+import 'package:practica2/src/models/user_dao.dart';
+import 'package:practica2/src/screen/dashboard.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -14,6 +17,18 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final picker = ImagePicker();
   String imagePath = "";
+  DatabaseHelper _database;
+
+  TextEditingController txtNombre = TextEditingController();
+  TextEditingController txtApellido = TextEditingController();
+  TextEditingController txtTel = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _database = DatabaseHelper();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +88,25 @@ class _ProfileState extends State<Profile> {
                   Text("Nombre"),
                   SizedBox(height: 10),
                   TextFormField(
+                      controller: txtNombre,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                          hintText: "Ingresa tu nombre completo",
+                          hintText: "Ingresa tu nombre(s)",
+                          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 20))),
+                  SizedBox(height: 20),
+                  Text("Apellidos"),
+                  SizedBox(height: 10),
+                  TextFormField(
+                      controller: txtApellido,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                          hintText: "Ingresa tu apellido(s)",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 20))),
                   SizedBox(height: 20),
                   Text("Email"),
                   SizedBox(height: 10),
                   TextFormField(
+                      controller: txtEmail,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           hintText: "Ingresa tu correo",
@@ -89,6 +115,7 @@ class _ProfileState extends State<Profile> {
                   Text("Teléfono"),
                   SizedBox(height: 10),
                   TextFormField(
+                      controller: txtTel,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                           hintText: "Ingresa tu numero de teléfono",
@@ -101,7 +128,26 @@ class _ProfileState extends State<Profile> {
                           borderRadius: BorderRadius.circular(8)),
                       color: Configuration.colorApp,
                       onPressed: () async {
-                        debugPrint("Actualizar");
+                        UserDAO user = UserDAO(
+                          id: 1,
+                          nomUser: txtNombre.text,
+                          lastUser: txtApellido.text,
+                          telUser: txtTel.text,
+                          emailUser: txtEmail.text,
+                          foto: imagePath,
+                          username: txtEmail.text,
+                          pwduser: "",
+                        );
+
+                        _database
+                            .insertar(user.toJSON(), 'tbl_perfil')
+                            .then((rows) => {print('$rows')});
+                        Navigator.pop(context);
+                        /*Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => Dashboard()),
+                          ModalRoute.withName('/login'));*/
                       }),
                 ]),
               ),
