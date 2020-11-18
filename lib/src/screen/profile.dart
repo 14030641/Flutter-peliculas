@@ -35,7 +35,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> userName() async {
     final SharedPreferences prefs = await _prefs;
-    String value = await prefs.getString("username");
+    String value = prefs.getString("username");
     setState(() => txtEmail.text = value);
     recuperar();
   }
