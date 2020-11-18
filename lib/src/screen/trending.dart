@@ -50,7 +50,7 @@ class _TrendingState extends State<Trending> {
         Result trending = movies[index];
         return CardTrending(trending: trending);
       },
-      itemCount: 20,
+      itemCount: movies.length,
     );
   }
 }

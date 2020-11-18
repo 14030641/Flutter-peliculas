@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:practica2/src/screen/dashboard.dart';
+import 'package:practica2/src/screen/detail_movie.dart';
 import 'package:practica2/src/screen/favorites.dart';
 import 'package:practica2/src/screen/login.dart';
 import 'package:practica2/src/screen/profile.dart';
 import 'package:practica2/src/screen/search.dart';
 import 'package:practica2/src/screen/trending.dart';
+import 'package:practica2/src/screen/splashscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -47,8 +49,9 @@ class _MyAppState extends State<MyApp> {
         'favorites': (BuildContext context) => Favorites(),
         '/profile': (BuildContext context) => Profile(),
         '/dashboard': (BuildContext context) => Dashboard(),
+        '/detail': (BuildContext context) => DetailMovie()
       },
-      home: inicio,
+      home: Splashscreen(),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:practica2/src/models/trending.dart';
 
 class ApiMovies {
   final String urlTrending =
-      "https://api.themoviedb.org/3/movie/popular?api_key=<>&language=es-MX&page=1"; //insertar la llave reemplazando el "<>"
+      "https://api.themoviedb.org/3/movie/popular?api_key=66f7b29c77934465145a14bcce50a967&language=es-MX&page=1"; //insertar la llave reemplazando el "<>"
   Client http = Client();
 
   Future<List<Result>> getTrending() async {
