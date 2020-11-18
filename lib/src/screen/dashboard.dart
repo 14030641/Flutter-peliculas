@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:practica2/src/assets/configuration.dart';
 import 'package:practica2/src/database/database_helper.dart';
 import 'package:practica2/src/models/user_dao.dart';
+import 'package:practica2/src/network/api_movies.dart';
 import 'package:practica2/src/screen/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,6 +28,9 @@ class _DashboardState extends State<Dashboard> {
     DatabaseHelper _database = DatabaseHelper();
     Future<UserDAO> _objUser =
         _database.getUsuario(_usr); //Lectura debe ser de shared preferences
+
+    ApiMovies apimovie = ApiMovies();
+    apimovie.getTrending();
     return Container(
       child: Scaffold(
         appBar: AppBar(
@@ -46,10 +50,10 @@ class _DashboardState extends State<Dashboard> {
                     currentAccountPicture: profPic(snapshot.data),
                     accountName: Text((snapshot.data != null)
                         ? snapshot.data.nomUser + ' ' + snapshot.data.lastUser
-                        : " "),
+                        : "Invitado"),
                     accountEmail: Text((snapshot.data != null)
                         ? snapshot.data.emailUser
-                        : " "),
+                        : "invitado@itcelaya.edu.mx"),
                     onDetailsPressed: () {
                       Navigator.pop(context);
                       Navigator.pushNamed(context, '/profile');
@@ -116,7 +120,7 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget profPic(data) {
-    if (data == null || data.foto == null || data.foto == "")
+    if (data == null || data.foto == null)
       return CircleAvatar(
         backgroundImage: NetworkImage(
             "https://villasmilindovillas.com/wp-content/uploads/2020/01/Profile.png"),

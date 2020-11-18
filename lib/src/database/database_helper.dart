@@ -54,15 +54,6 @@ class DatabaseHelper {
     var result = await dbClient
         .query('tbl_perfil', where: 'emailUser = ?', whereArgs: [emailUser]);
     var lista = (result).map((item) => UserDAO.fromJSON(item)).toList();
-    return lista.length > 0
-        ? lista[0]
-        : UserDAO(
-            nomUser: 'Invitado',
-            lastUser: '',
-            telUser: '',
-            emailUser: 'invitado@itcelaya.edu.mx',
-            foto: '',
-            pwduser: '',
-            username: '');
+    return lista.length > 0 ? lista[0] : null;
   }
 }

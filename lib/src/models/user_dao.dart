@@ -23,13 +23,14 @@ class UserDAO {
 
   factory UserDAO.fromJSON(Map<String, dynamic> map) {
     return UserDAO(
-      id: map['id'],
-      nomUser: map['nomUser'],
-      lastUser: map['lastUser'],
-      telUser: map['telUser'],
-      emailUser: map['emailUser'],
-      foto: map['foto'],
-    );
+        id: map['id'],
+        nomUser: map['nomUser'],
+        lastUser: map['lastUser'],
+        telUser: map['telUser'],
+        emailUser: map['emailUser'],
+        foto: map['foto'],
+        username: map['username'],
+        pwduser: map['pwduser']);
   }
   Map<String, dynamic> toJSON() {
     return {
