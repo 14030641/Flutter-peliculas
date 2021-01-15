@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practica2/src/models/trending.dart';
+import 'package:practica2/src/screen/detail_movie.dart';
 
 class CardTrending extends StatelessWidget {
   const CardTrending({Key key, @required this.trending}) : super(key: key);
@@ -52,11 +53,11 @@ class CardTrending extends StatelessWidget {
                             child:
                                 Icon(Icons.chevron_right, color: Colors.white),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/detail',
-                                  arguments: {
-                                    "title": trending.title,
-                                    "overview": trending.overview
-                                  });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailMovie(movie: trending)));
                             })
                       ],
                     )),
