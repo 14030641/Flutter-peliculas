@@ -23,6 +23,7 @@ class Result {
   double voteAverage;
   String overview;
   String releaseDate;
+  bool favorite = false;
 
   factory Result.fromJSON(Map<String, dynamic> map) {
     return Result(

@@ -101,10 +101,11 @@ class _ProfileState extends State<Profile> {
         child: Scaffold(
             appBar: AppBar(
               title: Text("Perfil"),
-              backgroundColor: Configuration.colorApp,
+              backgroundColor: Configuration.colorMain,
             ),
             body: Center(
               child: Container(
+                color: Configuration.colorMain,
                 padding: EdgeInsets.all(30),
                 child: ListView(children: <Widget>[
                   Container(
@@ -145,49 +146,73 @@ class _ProfileState extends State<Profile> {
                       },
                     ),
                   ),
-                  Text("Nombre"),
+                  Text(
+                    "Nombre",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   SizedBox(height: 10),
                   TextFormField(
+                      style: TextStyle(color: Colors.white),
                       controller: txtNombre,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
+                          fillColor: Configuration.colorApp,
+                          filled: true,
                           hintText: "Ingresa tu nombre(s)",
-                          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 20))),
+                          contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10))),
                   SizedBox(height: 20),
-                  Text("Apellidos"),
+                  Text(
+                    "Apellidos",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   SizedBox(height: 10),
                   TextFormField(
+                      style: TextStyle(color: Colors.white),
                       controller: txtApellido,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
+                          fillColor: Configuration.colorApp,
+                          filled: true,
                           hintText: "Ingresa tu apellido(s)",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 20))),
                   SizedBox(height: 20),
-                  Text("Email"),
+                  Text(
+                    "Email",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   SizedBox(height: 10),
                   TextFormField(
+                      style: TextStyle(color: Colors.white),
                       controller: txtEmail,
                       enabled: false,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
+                          fillColor: Configuration.colorApp,
+                          filled: true,
                           hintText: "Ingresa tu correo",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 20))),
                   SizedBox(height: 20),
-                  Text("Teléfono"),
+                  Text(
+                    "Teléfono",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   SizedBox(height: 10),
                   TextFormField(
+                      style: TextStyle(color: Colors.white),
                       controller: txtTel,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
+                          fillColor: Configuration.colorApp,
+                          filled: true,
                           hintText: "Ingresa tu numero de teléfono",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 20))),
-                  SizedBox(height: 10),
+                  SizedBox(height: 20),
                   RaisedButton(
                       child: Text('Actualizar',
                           style: TextStyle(color: Colors.white)),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)),
-                      color: Configuration.colorApp,
+                      color: Configuration.colorItems,
                       onPressed: () async {
                         update();
                       }),

@@ -33,78 +33,92 @@ class _DashboardState extends State<Dashboard> {
     apimovie.getTrending();
     return Container(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Configuration.colorApp,
-          title: Text('Peliculas'),
-        ),
-        drawer: Drawer(
-          child: FutureBuilder(
-            future: _objUser,
-            builder: (BuildContext context, AsyncSnapshot<UserDAO> snapshot) {
-              return ListView(
-                children: <Widget>[
-                  UserAccountsDrawerHeader(
-                    decoration: BoxDecoration(
-                      color: Configuration.colorApp,
-                    ),
-                    currentAccountPicture: profPic(snapshot.data),
-                    accountName: Text((snapshot.data != null)
-                        ? snapshot.data.nomUser + ' ' + snapshot.data.lastUser
-                        : "Invitado"),
-                    accountEmail: Text((snapshot.data != null)
-                        ? snapshot.data.emailUser
-                        : "invitado@itcelaya.edu.mx"),
-                    onDetailsPressed: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.trending_up,
-                        color: Configuration.colorItems),
-                    title: Text('Trending'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/trending');
-                    },
-                  ),
-                  ListTile(
-                    leading:
-                        Icon(Icons.search, color: Configuration.colorItems),
-                    title: Text('Search'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/search');
-                    },
-                  ),
-                  ListTile(
-                    leading:
-                        Icon(Icons.favorite, color: Configuration.colorItems),
-                    title: Text('Favorites'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/favorites');
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.exit_to_app,
-                        color: Configuration.colorItems),
-                    title: Text('Sign Out'),
-                    onTap: () {
-                      clearToken();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => Login()),
-                          ModalRoute.withName('/login'));
-                    },
-                  )
-                ],
-              );
-            },
+          backgroundColor: Configuration.colorMain,
+          appBar: AppBar(
+            backgroundColor: Configuration.colorMain,
+            title: Text('Peliculas'),
+            centerTitle: true,
           ),
-        ),
-      ),
+          drawer: Theme(
+            data: Theme.of(context)
+                .copyWith(canvasColor: Configuration.colorMain),
+            child: Drawer(
+              child: FutureBuilder(
+                future: _objUser,
+                builder:
+                    (BuildContext context, AsyncSnapshot<UserDAO> snapshot) {
+                  return ListView(
+                    children: <Widget>[
+                      UserAccountsDrawerHeader(
+                        decoration: BoxDecoration(
+                          color: Configuration.colorApp,
+                        ),
+                        currentAccountPicture: profPic(snapshot.data),
+                        accountName: Text((snapshot.data != null)
+                            ? snapshot.data.nomUser +
+                                ' ' +
+                                snapshot.data.lastUser
+                            : "Invitado"),
+                        accountEmail: Text((snapshot.data != null)
+                            ? snapshot.data.emailUser
+                            : "invitado@itcelaya.edu.mx"),
+                        onDetailsPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/profile');
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.trending_up,
+                            color: Configuration.colorItems),
+                        title: Text(
+                          'Trending',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/trending');
+                        },
+                      ),
+                      ListTile(
+                        leading:
+                            Icon(Icons.search, color: Configuration.colorItems),
+                        title: Text('Search',
+                            style: TextStyle(color: Colors.white)),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/search');
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.favorite,
+                            color: Configuration.colorItems),
+                        title: Text('Favorites',
+                            style: TextStyle(color: Colors.white)),
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, '/favorites');
+                        },
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.exit_to_app,
+                            color: Configuration.colorItems),
+                        title: Text('Sign Out',
+                            style: TextStyle(color: Colors.white)),
+                        onTap: () {
+                          clearToken();
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => Login()),
+                              ModalRoute.withName('/login'));
+                        },
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+          )),
     );
   }
 

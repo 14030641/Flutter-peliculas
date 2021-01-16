@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:practica2/src/assets/configuration.dart';
 import 'package:practica2/src/models/video.dart';
 
 class ApiVideo {
   String inicio = "https://api.themoviedb.org/3/movie/";
   int movie;
-  String fin =
-      "/videos?api_key=66f7b29c77934465145a14bcce50a967&language=en-US";
+  String fin = "/videos?api_key=${Configuration.key}&language=en-US";
   Client http = Client();
 
   ApiVideo({this.movie});
