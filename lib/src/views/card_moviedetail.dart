@@ -104,7 +104,7 @@ class MovieDetail extends StatelessWidget {
                       child: Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 10.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 10.0),
                         child: Text(
                           "Peliculas Similares",
                           style: TextStyle(

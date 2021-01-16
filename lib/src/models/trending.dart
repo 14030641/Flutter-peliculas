@@ -13,9 +13,6 @@ class Trending {
 }
 
 class Result {
-  double popularity;
-  int voteCount;
-  bool video;
   String posterPath;
   int id;
   String backdropPath;
@@ -23,13 +20,11 @@ class Result {
   double voteAverage;
   String overview;
   String releaseDate;
-  bool favorite = false;
+  String user;
+  int idmovie;
 
   factory Result.fromJSON(Map<String, dynamic> map) {
     return Result(
-        popularity: map['popularity'],
-        voteCount: map['vote_count'],
-        video: map['video'],
         posterPath: map['poster_path'],
         id: map['id'],
         backdropPath: map['backdrop_path'],
@@ -41,9 +36,6 @@ class Result {
         releaseDate: map['release_date']);
   }
   Result({
-    this.popularity,
-    this.voteCount,
-    this.video,
     this.posterPath,
     this.id,
     this.backdropPath,
@@ -52,6 +44,35 @@ class Result {
     this.overview,
     this.releaseDate,
   });
+
+  factory Result.fromJSONWithFavorite(Map<String, dynamic> movie) {
+    Result result = Result(
+        posterPath: movie["poster_path"],
+        id: movie["id"],
+        backdropPath: movie["backdrop_path"],
+        title: movie["title"],
+        voteAverage: movie["vote_average"] is int
+            ? (movie["vote_average"] as int).toDouble()
+            : movie["vote_average"],
+        overview: movie["overview"],
+        releaseDate: movie["release_date"]);
+    result.user = movie["user"];
+    result.idmovie = movie["idmovie"];
+    return result;
+  }
+
+  Map<String, dynamic> toFullJSON() {
+    return {
+      "poster_path": posterPath,
+      "idmovie": id,
+      "backdrop_path": backdropPath,
+      "title": title,
+      "vote_average": voteAverage,
+      "release_date": releaseDate,
+      "overview": overview,
+      "user": user,
+    };
+  }
 }
 
 enum OriginalLanguage { FR, EN, KO, JA }
