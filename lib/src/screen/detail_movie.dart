@@ -9,20 +9,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailMovie extends StatefulWidget {
   final Result movie;
-  final bool db;
-  DetailMovie({Result movie, bool db})
-      : this.movie = movie,
-        this.db = db;
+  DetailMovie({Result movie}) : this.movie = movie;
 
   @override
-  _DetailMovieState createState() => _DetailMovieState(movie: movie, db: db);
+  _DetailMovieState createState() => _DetailMovieState(movie: movie);
 }
 
 class _DetailMovieState extends State<DetailMovie> {
   String _user = "";
-  _DetailMovieState({this.movie, this.db});
+  _DetailMovieState({this.movie});
   final Result movie;
-  final bool db;
   IconData icon = Icons.favorite_outline;
   DatabaseHelper _databaseHelper;
   @override
@@ -70,14 +66,11 @@ class _DetailMovieState extends State<DetailMovie> {
   Future<void> userName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() => _user = prefs.getString("username"));
-
-    if (db) {
-      Result result = await _databaseHelper.getMovie(movie.id, _user);
-      if (result != null)
-        setState(() {
-          movie.user = result.user;
-          icon = movie.user != null ? Icons.favorite : Icons.favorite_outline;
-        });
-    }
+    Result result = await _databaseHelper.getMovie(movie.id, _user);
+    if (result != null)
+      setState(() {
+        movie.user = result.user;
+        icon = movie.user != null ? Icons.favorite : Icons.favorite_outline;
+      });
   }
 }

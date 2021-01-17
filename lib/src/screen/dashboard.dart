@@ -6,6 +6,7 @@ import 'package:practica2/src/database/database_helper.dart';
 import 'package:practica2/src/models/user_dao.dart';
 import 'package:practica2/src/network/api_movies.dart';
 import 'package:practica2/src/screen/login.dart';
+import 'package:practica2/src/screen/search.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
@@ -26,6 +27,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     DatabaseHelper _database = DatabaseHelper();
+    TextEditingController txtSearch = TextEditingController();
     Future<UserDAO> _objUser =
         _database.getUsuario(_usr); //Lectura debe ser de shared preferences
 
@@ -38,6 +40,31 @@ class _DashboardState extends State<Dashboard> {
             backgroundColor: Configuration.colorMain,
             title: Text('Peliculas'),
             centerTitle: true,
+          ),
+          body: ListView(
+            children: <Widget>[
+              TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  controller: txtSearch,
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                      fillColor: Configuration.colorApp,
+                      filled: true,
+                      hintText: "Ingrese su busqueda",
+                      contentPadding: EdgeInsets.fromLTRB(20, 10, 0, 10))),
+              RaisedButton(
+                  child: Text("Buscar"),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  color: Configuration.colorItems,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Search(search: txtSearch.text)));
+                  }),
+            ],
           ),
           drawer: Theme(
             data: Theme.of(context)
@@ -79,7 +106,7 @@ class _DashboardState extends State<Dashboard> {
                           Navigator.pushNamed(context, '/trending');
                         },
                       ),
-                      ListTile(
+                      /*ListTile(
                         leading:
                             Icon(Icons.search, color: Configuration.colorItems),
                         title: Text('Search',
@@ -88,7 +115,7 @@ class _DashboardState extends State<Dashboard> {
                           Navigator.pop(context);
                           Navigator.pushNamed(context, '/search');
                         },
-                      ),
+                      ),*/
                       ListTile(
                         leading: Icon(Icons.favorite,
                             color: Configuration.colorItems),

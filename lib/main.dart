@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
         '/login': (BuildContext context) => Login(),
         '/trending': (BuildContext context) => Trending(),
         '/search': (BuildContext context) => Search(),
-        'favorites': (BuildContext context) => Favorites(),
+        '/favorites': (BuildContext context) => Favorites(),
         '/profile': (BuildContext context) => Profile(),
         '/dashboard': (BuildContext context) => Dashboard(),
         '/detail': (BuildContext context) => DetailMovie()

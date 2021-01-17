@@ -204,7 +204,7 @@ class MovieDetail extends StatelessWidget {
           showVideoProgressIndicator: true);
     else
       return FadeInImage(
-        placeholder: AssetImage("assets/image.jpg"),
+        placeholder: AssetImage("assets/activity_indicator"),
         image: NetworkImage(
             "https://image.tmdb.org/t/p/w500/${movie.backdropPath}"),
       );

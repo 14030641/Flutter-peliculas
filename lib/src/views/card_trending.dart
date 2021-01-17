@@ -3,11 +3,9 @@ import 'package:practica2/src/models/trending.dart';
 import 'package:practica2/src/screen/detail_movie.dart';
 
 class CardTrending extends StatelessWidget {
-  const CardTrending({Key key, @required this.trending, this.db})
-      : super(key: key);
+  const CardTrending({Key key, @required this.trending}) : super(key: key);
 
   final Result trending;
-  final bool db;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +56,8 @@ class CardTrending extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => DetailMovie(
-                                          movie: trending, db: db)));
+                                      builder: (context) =>
+                                          DetailMovie(movie: trending)));
                             })
                       ],
                     )),

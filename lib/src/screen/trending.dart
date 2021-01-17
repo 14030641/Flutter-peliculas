@@ -53,7 +53,7 @@ class _TrendingState extends State<Trending> {
     return ListView.builder(
       itemBuilder: (context, index) {
         Result trending = movies[index];
-        return CardTrending(trending: trending, db: true);
+        return CardTrending(trending: trending);
       },
       itemCount: movies.length,
     );
